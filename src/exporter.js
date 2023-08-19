@@ -148,7 +148,9 @@ export default class {
 
   _getDeckGuid(deckName) {
     const hashBytes = sha1(deckName);
-    return parseInt(hashBytes, 16);
+    // https://github.com/repeat-space/anki-apkg-export/pull/41#issuecomment-727803474
+    const shortened = hashBytes.slice(0, 8); // otherwise we don't get int, we get something like 1.337874276105709e+42
+    return parseInt(shortened, 16);
   }
 
   _getNoteId(guid, ts) {
